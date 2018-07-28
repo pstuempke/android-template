@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 26
     defaultConfig {
@@ -12,6 +14,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -20,9 +23,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
 }
 
 dependencies {
+    implementation 'com.android.support:multidex:1.0.3'
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:26.1.0'
@@ -39,10 +48,11 @@ dependencies {
 
     // DAGGER2
     implementation 'com.google.dagger:dagger:2.11'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+    kapt 'com.google.dagger:dagger-compiler:2.11'
     implementation 'com.google.dagger:dagger-android:2.11'
     implementation 'com.google.dagger:dagger-android-support:2.11'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
+    kapt 'com.google.dagger:dagger-android-processor:2.11'
+
 
     // RXJAVA2
 
@@ -68,7 +78,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.1'
-    compile 'javax.annotation:jsr250-api:1.0'
+    implementation 'javax.annotation:jsr250-api:1.0'
 
     // GPS
 
